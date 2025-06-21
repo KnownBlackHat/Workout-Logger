@@ -10,19 +10,19 @@ class Home extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(
+        const Text(
           "What day is today?",
           style: TextStyle(fontSize: 34.0, color: Colors.white),
         ),
-        Splits(
+        const Splits(
           "Push",
           "https://cdn.shopify.com/s/files/1/0046/1828/9223/files/Pecs_480x480.png?v=1683142473",
         ),
-        Splits(
+        const Splits(
           "Pull",
           "https://cdn.shopify.com/s/files/1/0046/1828/9223/files/Biceps_480x480.png?v=1683142513",
         ),
-        Splits(
+        const Splits(
           "Legs",
           "https://cdn.shopify.com/s/files/1/0046/1828/9223/files/Quads_480x480.png?v=1683142678",
         ),
