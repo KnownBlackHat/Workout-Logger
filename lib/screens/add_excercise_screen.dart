@@ -1,11 +1,7 @@
 import "package:flutter/material.dart";
-import "package:workout_logger/screens/add_excercise_screen.dart";
-import "package:workout_logger/screens/workout_component.dart";
 
-class SplitsScreen extends StatelessWidget {
-  final String _muscle;
-
-  const SplitsScreen(this._muscle, {super.key});
+class ExcerciseScreen extends StatelessWidget {
+  const ExcerciseScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,19 +11,26 @@ class SplitsScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(height: 180),
+          SizedBox(height: 280),
           Center(
-            child: Text(
-              "$_muscle Day Workouts",
+            child: const Text(
+              "Add Excercise",
               style: TextStyle(color: Colors.white, fontSize: 34),
             ),
           ),
           SizedBox(height: 80),
 
-          Workout("test"),
-          Workout("test"),
-          Workout("test"),
-          Workout("test"),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30),
+            child: TextField(
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Excercise Name',
+              ),
+            ),
+          ),
+
+          SizedBox(height: 40),
 
           Container(
             decoration: BoxDecoration(
@@ -46,11 +49,11 @@ class SplitsScreen extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.add, color: Colors.white, size: 24),
+                    Icon(Icons.add, color: Colors.white),
                     SizedBox(width: 10),
                     Text(
                       "Add",
-                      style: TextStyle(color: Colors.white, fontSize: 24),
+                      style: TextStyle(color: Colors.white, fontSize: 20),
                     ),
                   ],
                 ),
