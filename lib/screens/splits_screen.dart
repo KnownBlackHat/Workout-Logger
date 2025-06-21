@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:workout_logger/screens/workout_component.dart";
 
 class SplitsScreen extends StatelessWidget {
   final String _muscle;
@@ -8,43 +9,51 @@ class SplitsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green,
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
+      backgroundColor: Colors.black,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(height: 180),
+          Center(
+            child: Text(
               "$_muscle Day Workouts",
               style: TextStyle(color: Colors.white, fontSize: 34),
             ),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-                borderRadius: BorderRadius.circular(12.0),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton(
-                    onPressed: null,
-                    icon: Icon(Icons.add, color: Colors.white),
-                    color: Colors.white,
-                    iconSize: 24.0,
-                    tooltip: "Add",
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(right: 24.0),
-                    child: Text(
-                      "Add",
-                      style: TextStyle(color: Colors.white, fontSize: 24),
-                    ),
-                  ),
-                ],
-              ),
+          ),
+          SizedBox(height: 80),
+
+          Workout("test"),
+          Workout("test"),
+          Workout("test"),
+          Workout("test"),
+
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.blue,
+              borderRadius: BorderRadius.circular(12.0),
             ),
-          ],
-        ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(
+                  onPressed: null,
+                  icon: const Icon(Icons.add, color: Colors.white),
+                  color: Colors.white,
+                  iconSize: 24.0,
+                  tooltip: "Add",
+                ),
+                Container(
+                  margin: const EdgeInsets.only(right: 24.0),
+                  child: const Text(
+                    "Add",
+                    style: TextStyle(color: Colors.white, fontSize: 24),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
