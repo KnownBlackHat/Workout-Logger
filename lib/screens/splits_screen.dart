@@ -1,32 +1,22 @@
 import "package:flutter/material.dart";
+import "package:provider/provider.dart";
+import "package:workout_logger/provider/exercise_provider.dart";
 import "package:workout_logger/screens/add_excercise_screen.dart";
 import "package:workout_logger/screens/workout_component.dart";
-import "package:mongo_dart/mongo_dart.dart" hide Center;
 
 class SplitsScreen extends StatelessWidget {
   final String _muscle;
 
   const SplitsScreen(this._muscle, {super.key});
 
-  Future<List<String>> fetchExercise() async {
-    try {
-      final db = await Db.create(
-        'mongodb+srv://test:test@cluster0.yvlq9mj.mongodb.net/workout_logger?retryWrites=true&w=majority&appName=Cluster0',
-      );
-      await db.open();
-      final collection = db.collection('exercise');
-
-      final exercise = await collection.find().toList();
-      await db.close();
-      return exercise.map((doc) => doc['name'] as String).toList();
-    } catch (e) {
-      print("Error fetching exercises: $e");
-      return [];
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<ExerciseProvider>(
+        context,
+        listen: false,
+      ).fetchExercise(_muscle);
+    });
     return Scaffold(
       backgroundColor: Colors.black,
       body: Column(
@@ -42,21 +32,21 @@ class SplitsScreen extends StatelessWidget {
           ),
           SizedBox(height: 80),
 
-          FutureBuilder(
-            future: fetchExercise(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
+          Consumer<ExerciseProvider>(
+            builder: (context, provider, child) {
+              // provider.fetchExercise(_muscle);
+              if (provider.isLoading) {
                 return const Center(
                   child: CircularProgressIndicator(color: Colors.blue),
                 );
-              } else if (snapshot.hasError) {
+              } else if (provider.error != null) {
                 return const Center(
                   child: Text(
                     "Error loading exercises",
                     style: TextStyle(color: Colors.red, fontSize: 20),
                   ),
                 );
-              } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              } else if (provider.exercises.isEmpty) {
                 return const Center(
                   child: Text(
                     "No exercises found",
@@ -65,7 +55,7 @@ class SplitsScreen extends StatelessWidget {
                 );
               } else {
                 return Column(
-                  children: snapshot.data!.map((exerciseName) {
+                  children: provider.exercises.map((exerciseName) {
                     return Workout(exerciseName);
                   }).toList(),
                 );
@@ -85,7 +75,7 @@ class SplitsScreen extends StatelessWidget {
                 onPressed: () => {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => const ExcerciseScreen(),
+                      builder: (context) => ExcerciseScreen(_muscle),
                     ),
                   ),
                 },

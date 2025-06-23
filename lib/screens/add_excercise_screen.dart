@@ -1,27 +1,14 @@
 import "package:flutter/material.dart";
-import "package:mongo_dart/mongo_dart.dart" hide Center;
+import "package:provider/provider.dart";
+import "package:workout_logger/provider/exercise_provider.dart";
 
 class ExcerciseScreen extends StatelessWidget {
-  const ExcerciseScreen({super.key});
+  final String _muscle;
+  const ExcerciseScreen(this._muscle, {super.key});
 
   @override
   Widget build(BuildContext context) {
     final TextEditingController excerciseController = TextEditingController();
-
-    Future<void> dbAddExcercise(String excerciseName) async {
-      try {
-        final db = await Db.create(
-          'mongodb+srv://test:test@cluster0.yvlq9mj.mongodb.net/workout_logger?retryWrites=true&w=majority&appName=Cluster0',
-        );
-        await db.open();
-        final collection = db.collection('exercise');
-
-        await collection.insertOne({'name': excerciseName});
-        await db.close();
-      } catch (e) {
-        print("Error connecting to MongoDB: $e");
-      }
-    }
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -65,10 +52,13 @@ class ExcerciseScreen extends StatelessWidget {
                   if (excerciseController.text.isNotEmpty) {
                     final navigator = Navigator.of(context);
                     final scaffoldMessenger = ScaffoldMessenger.of(context);
+                    navigator.pop();
 
                     try {
-                      await dbAddExcercise(excerciseController.text);
-                      navigator.pop();
+                      await Provider.of<ExerciseProvider>(
+                        context,
+                        listen: false,
+                      ).addExcercise(excerciseController.text, _muscle);
                       scaffoldMessenger.showSnackBar(
                         const SnackBar(
                           content: Text("Exercise added successfully"),
