@@ -49,49 +49,46 @@ class _StopWatch extends State<StopWatch> {
     } else {
       color = Colors.red;
     }
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CupertinoButton(
-                onPressed: handleStartStop,
-                padding: EdgeInsets.all(0),
-                child: Container(
-                  height: 250,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: color, width: 4),
-                  ),
-                  child: Text(
-                    returnFormattedText(),
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+    return SafeArea(
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CupertinoButton(
+              onPressed: handleStartStop,
+              padding: EdgeInsets.all(0),
+              child: Container(
+                height: 250,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: color, width: 4),
                 ),
-              ),
-
-              SizedBox(height: 35),
-
-              CupertinoButton(
-                onPressed: stopwatch.reset,
-                color: Colors.red,
                 child: Text(
-                  "Reset",
+                  returnFormattedText(),
                   style: TextStyle(
                     color: Colors.white,
+                    fontSize: 40,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+
+            SizedBox(height: 35),
+
+            CupertinoButton(
+              onPressed: stopwatch.reset,
+              color: Colors.red,
+              child: Text(
+                "Reset",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

@@ -13,7 +13,21 @@ class _RLoggerState extends State<RLogger> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Container(color: Colors.green, child: const StopWatch()),
+      body: Column(
+        children: [
+          const StopWatch(),
+          const SizedBox(height: 80),
+          Text(
+            'Pr section',
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          const SizedBox(height: 200),
+          Text(
+            'log current',
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+        ],
+      ),
     );
   }
 }
